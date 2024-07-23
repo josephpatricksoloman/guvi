@@ -1,0 +1,23 @@
+-rwx/rw/r
+764
+
+Task 1:
+Create a file with .txt extension (/home/demo.txt). Change the permission set of that file, so that any user can read it, 
+group can read/write & owner can read/write/execute it.
+
+
+Input Commands:
+pwd 
+cd home
+ls
+sudo su -
+touch /home/demo.txt
+echo this is second task > /home/demo.txt
+ls -lh
+sudo su -
+chown -R root:jose /home/demo.txt
+ls -lh
+sudo chmod 764 /home/demo.txt
+ls -lh
+
+Output Refer to the file_permission image  
