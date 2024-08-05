@@ -1,0 +1,19 @@
+#!/bin/bash
+# input file
+INPUT_FILE="input.txt"
+
+# temporary file to store intermediate results
+TEMP_FILE="temp.txt"
+
+# Process the file
+awk 'NR < 5 {print $0; next}
+     /welcome/ {gsub(/give/, "learning")}
+     {print $0}' "$INPUT_FILE" > "$TEMP_FILE"
+
+# Move the temporary file to the original file
+mv "$TEMP_FILE" "$INPUT_FILE"
+
+echo "replacement completed."
+
+echo "the replaced content lsited below"
+cat input.txt
