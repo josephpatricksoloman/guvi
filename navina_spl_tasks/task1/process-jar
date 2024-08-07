@@ -1,0 +1,40 @@
+#!/bin/bash
+# Define variables
+dir_name="process-jar"
+jar_file="example.jar"
+user_name="linuxUser"
+group_name="root"
+
+# Create the directory
+mkdir -p $dir_name
+
+# Create a sample jar file   
+
+echo "public class Example {
+    public static void main(String[] args) {
+        System.out.println(\"Hello, World!\");
+    }
+}" > Example.java
+
+
+javac Example.java
+jar cf $dir_name/$jar_file Example.class
+
+# Clean up the temporary files
+rm Example.java Example.class
+
+# Create the user and add to the group root
+if id "$user_name" &>/dev/null; then
+    echo "User $user_name already exists."
+else
+    sudo useradd -g $group_name $user_name
+fi
+
+# Change the ownership of the jar file to linuxUser
+sudo chown $user_name:$group_name $dir_name/$jar_file
+
+# Set the permissions to allow the user to execute the jar file
+sudo chmod 750 $dir_name/$jar_file
+
+# Execute the jar file as linuxUser
+sudo -u $user_name java -jar $dir_name/$jar_file
